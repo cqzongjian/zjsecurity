@@ -1,4 +1,4 @@
-###项目结构
+### 项目结构
 
 	zjsecurity:主模块
 	│  
@@ -65,7 +65,7 @@
 
 #### 编写用户详情服务
 
-- @PathVariable  映射url片段到java方法的参数
+- `@PathVariable`  映射url片段到java方法的参数
 
  		@GetMapping("/{id:\\d+}")
 		public User getInfo(@PathVariable String id) {
@@ -76,10 +76,38 @@
 
 		@GetMapping("/{id:\\d+}")
 
-- @JsonView控制json输出内容
+- `@JsonView`控制json输出内容
 
-> 	@JsonView使用步骤：
-> 		（1）使用接口来声明多个视图；
-> 		（2）在值对象的get方法上指定视图；
-> 		（3）在Controller方法上指定视图。
+ 	`@JsonView`使用步骤：
+
+	（1）使用接口来声明多个视图；
+
+		public class User {
+		
+		    public interface UserSimpleView {}
+		    public interface UserDetailView extends UserSimpleView {}
+		
+		    private String username;
+		    private String password;
+		
+			...
+	
+		}
+
+	（2）在值对象的get方法上指定视图；
+
+		@JsonView(UserSimpleView.class)
+		public String getUsername() {
+		    return username;
+		}
+
+	（3）在Controller方法上指定视图。
+
+		@GetMapping("/{id:\\d+}")
+		@JsonView(User.UserDetailView.class)
+		public User getInfo(@PathVariable String id) {
+		    User user = new User();
+		    user.setUsername("tom");
+		    return user;
+		}
 
