@@ -2,7 +2,9 @@ package site.zongjian.dto;
 
 import com.fasterxml.jackson.annotation.JsonView;
 import org.hibernate.validator.constraints.NotBlank;
+import site.zongjian.validator.MyConstraint;
 
+import javax.validation.constraints.Past;
 import java.util.Date;
 
 public class User {
@@ -11,9 +13,11 @@ public class User {
     public interface UserDetailView extends UserSimpleView {}
 
     private int id;
+    @MyConstraint(message = "测试自定义验证注解")
     private String username;
-    @NotBlank  // 不为空校验
+    @NotBlank(message = "密码不能为空")  // 不为空校验
     private String password;
+    @Past(message = "生日必须是过去的时间")  // 校验过去时间
     private Date birthday;
 
     @JsonView(UserSimpleView.class)

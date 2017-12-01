@@ -191,5 +191,169 @@
 	        }
 			...
 	    }
-        
-        
+
+
+#### 开发用户信息修改和删除服务
+
+- 常用的验证注解
+
+<table border="1" cellspacing="0" cellpadding="0"> 
+  <tbody> 
+   <tr> 
+    <td valign="top"> <p><strong>注解</strong></p> </td> 
+    <td valign="top"> <p><strong>适用的数据类型</strong></p> </td> 
+    <td valign="top"> <p><strong>说明</strong></p> </td> 
+   </tr> 
+   <tr> 
+    <td valign="top"> <p><strong>@AssertFalse</strong></p> </td> 
+    <td valign="top"> <p>Boolean, boolean</p> </td> 
+    <td valign="top"> <p>验证注解的元素值是false</p> </td> 
+   </tr> 
+   <tr> 
+    <td valign="top"> <p><strong>@AssertTrue</strong></p> </td> 
+    <td valign="top"> <p>Boolean, boolean</p> </td> 
+    <td valign="top"> <p>验证注解的元素值是true</p> </td> 
+   </tr> 
+   <tr> 
+    <td valign="top"> <p><strong>@DecimalMax</strong><strong>（value=x）</strong></p> </td> 
+    <td valign="top"> <p>BigDecimal, BigInteger, String, byte,short, int, long and the respective wrappers of the primitive types. Additionally supported by HV: any sub-type of Number andCharSequence.</p> </td> 
+    <td valign="top"> <p>验证注解的元素值小于等于@ DecimalMax指定的value值</p> </td> 
+   </tr> 
+   <tr> 
+    <td valign="top"> <p><strong>@DecimalMin</strong><strong>（value=x）</strong></p> </td> 
+    <td valign="top"> <p>BigDecimal, BigInteger, String, byte,short, int, long and the respective wrappers of the primitive types. Additionally supported by HV: any sub-type of Number andCharSequence.</p> </td> 
+    <td valign="top"> <p>验证注解的元素值小于等于@ DecimalMin指定的value值</p> </td> 
+   </tr> 
+   <tr> 
+    <td valign="top"> <p><strong>@Digits(integer=</strong><strong>整数位数, fraction=小数位数)</strong></p> </td> 
+    <td valign="top"> <p>BigDecimal, BigInteger, String, byte,short, int, long and the respective wrappers of the primitive types. Additionally supported by HV: any sub-type of Number andCharSequence.</p> </td> 
+    <td valign="top"> <p>验证注解的元素值的整数位数和小数位数上限</p> </td> 
+   </tr> 
+   <tr> 
+    <td valign="top"> <p><strong>@Future</strong></p> </td> 
+    <td valign="top"> <p><a href="http://www.weare.net.cn/1/search.html?title=java" target="_blank">java</a>.util.Date, <a href="http://www.weare.net.cn/1/search.html?title=java" target="_blank">java</a>.util.Calendar; Additionally supported by HV, if the<a href="http://joda-time.sourceforge.net/" rel="external nofollow">Joda Time</a>&nbsp;date/time API is on the class path: any implementations ofReadablePartial andReadableInstant.</p> </td> 
+    <td valign="top"> <p>验证注解的元素值（日期类型）比当前时间晚</p> </td> 
+   </tr> 
+   <tr> 
+    <td valign="top"> <p><strong>@Max</strong><strong>（value=x）</strong></p> </td> 
+    <td valign="top"> <p>BigDecimal, BigInteger, byte, short,int, long and the respective wrappers of the primitive types. Additionally supported by HV: any sub-type ofCharSequence (the numeric value represented by the character sequence is evaluated), any sub-type of Number.</p> </td> 
+    <td valign="top"> <p>验证注解的元素值小于等于@Max指定的value值</p> </td> 
+   </tr> 
+   <tr> 
+    <td valign="top"> <p><strong>@Min</strong><strong>（value=x）</strong></p> </td> 
+    <td valign="top"> <p>BigDecimal, BigInteger, byte, short,int, long and the respective wrappers of the primitive types. Additionally supported by HV: any sub-type of CharSequence (the numeric value represented by the char sequence is evaluated), any sub-type of Number.</p> </td> 
+    <td valign="top"> <p>验证注解的元素值大于等于@Min指定的value值</p> </td> 
+   </tr> 
+   <tr> 
+    <td valign="top"> <p><strong>@NotNull</strong></p> </td> 
+    <td valign="top"> <p>Any type</p> </td> 
+    <td valign="top"> <p>验证注解的元素值不是null</p> </td> 
+   </tr> 
+   <tr> 
+    <td valign="top"> <p><strong>@Null</strong></p> </td> 
+    <td valign="top"> <p>Any type</p> </td> 
+    <td valign="top"> <p>验证注解的元素值是null</p> </td> 
+   </tr> 
+   <tr> 
+    <td valign="top"> <p><strong>@Past</strong></p> </td> 
+    <td valign="top"> <p><a href="http://www.weare.net.cn/1/search.html?title=java" target="_blank">java</a>.util.Date, <a href="http://www.weare.net.cn/1/search.html?title=java" target="_blank">java</a>.util.Calendar; Additionally supported by HV, if the<a href="http://joda-time.sourceforge.net/" rel="external nofollow">Joda Time</a>&nbsp;date/time API is on the class path: any implementations ofReadablePartial andReadableInstant.</p> </td> 
+    <td valign="top"> <p>验证注解的元素值（日期类型）比当前时间早</p> </td> 
+   </tr> 
+   <tr> 
+    <td valign="top"> <p><strong>@Pattern(regex=</strong><strong>正则表达式, flag=)</strong></p> </td> 
+    <td valign="top"> <p>String. Additionally supported by HV: any sub-type of CharSequence.</p> </td> 
+    <td valign="top"> <p>验证注解的元素值与指定的正则表达式匹配</p> </td> 
+   </tr> 
+   <tr> 
+    <td valign="top"> <p><strong>@Size(min=</strong><strong>最小值, max=最大值)</strong></p> </td> 
+    <td valign="top"> <p>String, Collection, Map and arrays. Additionally supported by HV: any sub-type of CharSequence.</p> </td> 
+    <td valign="top"> <p>验证注解的元素值的在min和max（包含）指定区间之内，如字符长度、集合大小</p> </td> 
+   </tr> 
+   <tr> 
+    <td valign="top"> <p><strong>@Valid</strong></p> </td> 
+    <td valign="top"> <p>Any non-primitive type（引用类型）</p> </td> 
+    <td valign="top"> <p>验证关联的对象，如账户对象里有一个订单对象，指定验证订单对象</p> </td> 
+   </tr> 
+   <tr> 
+    <td valign="top"> <p><strong>@NotEmpty</strong></p> </td> 
+    <td valign="top"> <p><code>CharSequence</code>,<code>Collection</code>,&nbsp;<code>Map and Arrays</code></p> </td> 
+    <td valign="top"> <p>验证注解的元素值不为null且不为空（字符串长度不为0、集合大小不为0）</p> </td> 
+   </tr> 
+   <tr> 
+    <td valign="top"> <p><strong>@Range(min=</strong><strong>最小值, max=最大值)</strong></p> </td> 
+    <td valign="top"> <p><code>CharSequence, Collection, Map and Arrays,BigDecimal, BigInteger, CharSequence, byte, short, int, long and the respective wrappers of the primitive types</code></p> </td> 
+    <td valign="top"> <p>验证注解的元素值在最小值和最大值之间</p> </td> 
+   </tr> 
+   <tr> 
+    <td valign="top"> <p><strong>@NotBlank</strong></p> </td> 
+    <td valign="top"> <p><code>CharSequence</code><code></code></p> </td> 
+    <td valign="top"> <p>验证注解的元素值不为空（不为null、去除首位空格后长度为0），不同于@NotEmpty，@NotBlank只应用于字符串且在比较时会去除字符串的空格</p> </td> 
+   </tr> 
+   <tr> 
+    <td valign="top"> <p><strong>@Length(min=</strong><strong>下限, max=上限)</strong></p> </td> 
+    <td valign="top"> <p><code>CharSequence</code></p> </td> 
+    <td valign="top"> <p>验证注解的元素值长度在min和max区间内</p> </td> 
+   </tr> 
+   <tr> 
+    <td valign="top"> <p><strong>@Email</strong></p> </td> 
+    <td valign="top"> <p><code>CharSequence</code></p> </td> 
+    <td valign="top"> <p>验证注解的元素值是Email，也可以通过正则表达式和flag指定自定义的email格式</p> </td> 
+   </tr> 
+  </tbody> 
+ </table>
+
+
+
+- 自定义消息
+
+		public class User {
+		    ...
+		    @NotBlank(message = "密码不能为空")  // 不为空校验
+		    private String password;
+		    @Past(message = "生日必须是过去的时间")  // 校验过去时间
+		    private Date birthday;
+			...
+		}
+
+
+- 自定义校验注解
+
+		@Target({ElementType.METHOD, ElementType.FIELD})
+		@Retention(RetentionPolicy.RUNTIME)
+		@Constraint(validatedBy = MyConstraintValidator.class)
+		public @interface MyConstraint {
+		
+		    String message();
+		
+		    Class<?>[] groups() default { };
+		
+		    Class<? extends Payload>[] payload() default { };
+		
+		}
+
+
+		public class MyConstraintValidator implements ConstraintValidator<MyConstraint, Object> {
+		
+			@Autowired
+			private HelloService helloService;
+		
+			@Override
+			public void initialize(MyConstraint constraintAnnotation) {
+				System.out.println("my validator init");
+			}
+		
+			@Override
+			public boolean isValid(Object value, ConstraintValidatorContext context) {
+				helloService.greeting("tom");
+				System.out.println(value);
+				return false;
+			}
+		
+		}
+
+		public class User {
+		    ...
+		    @MyConstraint(message = "测试自定义验证注解")
+		    private String username;
+			...
+		}
