@@ -5,10 +5,12 @@ import org.apache.commons.lang.builder.ReflectionToStringBuilder;
 import org.apache.commons.lang.builder.ToStringStyle;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import site.zongjian.dto.User;
 import site.zongjian.dto.UserQueryCondition;
 
+import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -43,9 +45,25 @@ public class UserController {
     public User getInfo(@PathVariable String id) {
         User user = new User();
         user.setUsername("tom");
-
         return user;
+    }
 
+    @PostMapping
+    public User create(@Valid @RequestBody User user, BindingResult errors) {
+
+        if (errors.hasErrors()) {
+            errors.getAllErrors()
+                    .stream()
+                    .forEach(error -> System.out.println(error.getDefaultMessage()));
+        }
+
+        System.out.println(user.getId());
+        System.out.println(user.getUsername());
+        System.out.println(user.getPassword());
+        System.out.println(user.getBirthday());
+
+        user.setId(1);
+        return user;
     }
 
 }

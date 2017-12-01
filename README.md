@@ -111,3 +111,83 @@
 		    return user;
 		}
 
+
+#### 处理创建请求
+
+- `@RequestBody`映射请求体到java方法的参数
+
+		@Test
+		public void whenCreateSuccess() throws Exception {
+		    Date date = new Date();
+		    System.out.println(date.getTime());
+		    String content = "{\"username\":\"tom\",\"password\":null,\"birthday\":"+ date.getTime() +"}";
+		    String result = mockMvc.perform(MockMvcRequestBuilders.post("/user")
+		            .contentType(MediaType.APPLICATION_JSON_UTF8).content(content))
+		            .andExpect(MockMvcResultMatchers.status().isOk())
+		            .andExpect(MockMvcResultMatchers.jsonPath("$.id").value("1"))
+		            .andReturn().getResponse().getContentAsString();
+		    System.out.println(result);
+		
+		}
+
+		// 如果没有@RequestBody，将无法获取请求传来的参数，所有输出内容都为null。
+		@PostMapping
+	    public User create(@RequestBody User user) {
+	
+	        System.out.println(user.getId());
+	        System.out.println(user.getUsername());
+	        System.out.println(user.getPassword());
+	        System.out.println(user.getBirthday());
+	
+	        user.setId(1);
+	        return user;
+	    }
+
+- 日期类型参数的处理 ——传递时间戳
+
+		public class User {
+		    ...
+		    private Date birthday;
+			...
+		}
+
+		@PostMapping
+	    public User create(@RequestBody User user) {
+			...
+	        System.out.println(user.getBirthday());  // 输出内容：1512115592801
+			...
+	    }
+
+		@Test
+		public void whenCreateSuccess() throws Exception {
+		    Date date = new Date();
+		    System.out.println(date.getTime());  // 输出内容：Fri Dec 01 16:06:32 CST 2017
+		    String content = "{\"username\":\"tom\",\"password\":null,\"birthday\":"+ date.getTime() +"}";
+		    String result = mockMvc.perform(MockMvcRequestBuilders.post("/user")
+		            .contentType(MediaType.APPLICATION_JSON_UTF8).content(content))
+		            .andExpect(MockMvcResultMatchers.status().isOk())
+		            .andExpect(MockMvcResultMatchers.jsonPath("$.id").value("1"))
+		            .andReturn().getResponse().getContentAsString();
+		    System.out.println(result);  //  输出内容：{"id":1,"username":"tom","password":null,"birthday":1512115592801}
+		
+		}
+
+- `@Valid`注解和`BindingResult`验证请求参数的合法性并处理校验结果
+
+		public class User {
+		    ...
+		    @NotBlank  // 不为空校验
+		    private String password;
+		    ...
+		}
+
+
+		@PostMapping
+	    public User create(@Valid @RequestBody User user, BindingResult errors) {
+	        if (errors.hasErrors()) {
+	            errors.getAllErrors()
+	                    .stream()
+	                    .forEach(error -> System.out.println(error.getDefaultMessage()));
+	        }
+			...
+	    }
