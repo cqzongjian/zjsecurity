@@ -357,3 +357,8 @@
 		    private String username;
 			...
 		}
+		
+		
+#### 服务异常处理
+
+- 异步处理 REST 服务
