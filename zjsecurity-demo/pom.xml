@@ -18,6 +18,11 @@
             <version>${zjsecurity.version}</version>
         </dependency>
         <dependency>
+            <groupId>site.zongjian.zjsecurity</groupId>
+            <artifactId>zjsecurity-browser</artifactId>
+            <version>${zjsecurity.version}</version>
+        </dependency>
+        <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
         </dependency>
