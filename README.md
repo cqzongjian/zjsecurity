@@ -1,4 +1,4 @@
-### 项目结构
+## 项目结构
 
 	zjsecurity:主模块
 	│  
@@ -9,8 +9,9 @@
 	├─zjsecurity-app:app相关特定代码
 	│              
 	└─zjsecurity-demo:样例程序
+	
 
-### maven打包
+## maven打包
 
 在demo的pom.xml中添加
 
@@ -41,7 +42,7 @@
     java -jar demo.jar
 
 
-### 使用Spring MVC开发RESTful API
+## 使用Spring MVC开发RESTful API
 
 	- 查询  /user/query?name=zongjian    GET     /user?name=zongjian  GET
 	- 详情  /user/getInfo?id=1           GET     /user/1              GET
@@ -49,7 +50,7 @@
 	- 修改  /user/update?id=1&name=jack  POST    /user/1              PUT
 	- 删除  /user/delete?id=1            GET     /user/1              DELETE
 
-#### 编写查询请求
+### 编写查询请求
 
 常用注释
 
@@ -63,7 +64,7 @@
 
 [JsonPath 参考文档](https://github.com/json-path/JsonPath "JsonPath")
 
-#### 编写用户详情服务
+### 编写用户详情服务
 
 - `@PathVariable`  映射url片段到java方法的参数
 
@@ -112,7 +113,7 @@
 		}
 
 
-#### 处理创建请求
+### 处理创建请求
 
 - `@RequestBody`映射请求体到java方法的参数
 
@@ -193,7 +194,7 @@
 	    }
 
 
-#### 开发用户信息修改和删除服务
+### 开发用户信息修改和删除服务
 
 - 常用的验证注解
 
@@ -359,7 +360,7 @@
 		}
 		
 		
-#### 服务异常处理
+### 服务异常处理
 
 - 异步处理 REST 服务
 
@@ -438,3 +439,20 @@ spring boot 默认的错误处理机制：
         
 
 - 切片（Aspect）
+
+
+## 使用Spring Security开发基于表单的登录
+
+    认证（你是谁）
+    授权（你能干什么）
+    攻击防护（防止伪造身份）
+
+### SpringSecurity基本原理
+
+    过滤器链
+    
+      Username
+      Password                 Basic                       Exception
+    Authentication -->     Authentication  -->  ...  -->  Transaction  -->  FilterSecurity   --> REST API
+       Filter                  Filter                       Filter           Interceptor
+    
