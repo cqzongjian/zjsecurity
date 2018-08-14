@@ -414,3 +414,27 @@ spring boot 默认的错误处理机制：
 
     throw new UserNotExitException(id);
     
+
+### 使用切片拦截REST服务
+
+- 过滤器（Filter）
+
+- 拦截器（Interceptor）
+
+    @Configuration
+    public class WebConfig extends WebMvcConfigurerAdapter {
+    
+        @Autowired
+        private TimeInterceptor timeInterceptor;
+    
+        @Override
+        public void addInterceptors(InterceptorRegistry registry) {
+            registry.addInterceptor(timeInterceptor);
+        }
+    
+        ...
+        
+    }
+        
+
+- 切片（Aspect）

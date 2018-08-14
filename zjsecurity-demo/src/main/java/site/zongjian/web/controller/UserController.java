@@ -47,11 +47,12 @@ public class UserController {
     public User getInfo(@PathVariable String id) {
 
 //        throw new RuntimeException("用户不存在！");
-        throw new UserNotExitException(id);
+//        throw new UserNotExitException(id);
 
-//        User user = new User();
-//        user.setUsername("tom");
-//        return user;
+        System.out.println("进入 getInfo 服务");
+        User user = new User();
+        user.setUsername("tom");
+        return user;
     }
 
     @PostMapping
