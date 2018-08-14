@@ -362,3 +362,55 @@
 #### 服务异常处理
 
 - 异步处理 REST 服务
+
+spring boot 默认的错误处理机制：
+
+    resources/resources/error/404.html
+       
+自定义异常处理：
+
+(1) `exception/UserNotExitException.java`
+
+    package site.zongjian.exception;
+    
+    public class UserNotExitException extends RuntimeException {
+    
+        private static final long serialVersionUID = -3727308783370998561L;
+    
+        private String id;
+    
+        public UserNotExitException(String id) {
+            super("用户不存在！");
+            this.id = id;
+        }
+    
+    
+        public String getId() {
+            return id;
+        }
+    
+        public void setId(String id) {
+            this.id = id;
+        }
+    }
+
+(2) `controller/ControllerExceptionHandler.java`
+    
+    @ControllerAdvice
+    public class ControllerExceptionHandler {
+    
+        @ExceptionHandler(UserNotExitException.class)
+        @ResponseBody
+        @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)  // 状态码500
+        public Map<String, Object> handleUserNotExistException(UserNotExitException ex) {
+            Map<String, Object> result = new HashMap<>();
+            result.put("id", ex.getId());
+            result.put("message", ex.getMessage());
+            return result;
+        }
+    }
+    
+(3) `controller/UserController.java` 中处理异常：
+
+    throw new UserNotExitException(id);
+    

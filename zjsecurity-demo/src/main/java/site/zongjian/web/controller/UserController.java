@@ -10,6 +10,7 @@ import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
 import site.zongjian.dto.User;
 import site.zongjian.dto.UserQueryCondition;
+import site.zongjian.exception.UserNotExitException;
 
 import javax.validation.Valid;
 import java.util.ArrayList;
@@ -46,10 +47,11 @@ public class UserController {
     public User getInfo(@PathVariable String id) {
 
 //        throw new RuntimeException("用户不存在！");
+        throw new UserNotExitException(id);
 
-        User user = new User();
-        user.setUsername("tom");
-        return user;
+//        User user = new User();
+//        user.setUsername("tom");
+//        return user;
     }
 
     @PostMapping
